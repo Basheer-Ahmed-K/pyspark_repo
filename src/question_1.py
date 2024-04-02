@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, collect_set, countDistinct
+from pyspark.sql.functions import col, countDistinct
 from pyspark.sql.types import StructType, IntegerType, StructField, StringType
 
 spark_session = SparkSession.builder.appName('spark-assignment').getOrCreate()

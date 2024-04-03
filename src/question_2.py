@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import udf
-from pyspark.sql.types import StringType
+from pyspark.sql.types import StringType, StructType, StructField
 
 spark = SparkSession.builder.appName('spark-assignment').getOrCreate()
 
@@ -9,18 +9,30 @@ data = [("1234567891234567",),
         ("9123456712345678",),
         ("1234567812341122",),
         ("1234567812341342",)]
-schema = ['card_number']
+schema = ["credit_card"]
+custom_schema = StructType([
+    StructField("card_number", StringType(), True)
+])
 
 print("Method 1: using createDataFrame function")
 credit_card_df = spark.createDataFrame(data, schema)
 credit_card_df.show()
 
-print("Method 2: using read csv file")
+print("Method 2: using custom schema function")
+credit_card_df = spark.createDataFrame(data, custom_schema)
+credit_card_df.show()
+
+print("Method 3: using read csv file")
 csv_path = r'C:\Users\Basheer AhmedK\Desktop\Diggibyte\Pyspark\pyspark assignment\resources\credit_cards.csv'
 credit_card_csv_df = spark.read.csv(csv_path, inferSchema=True, header=True)
 credit_card_csv_df.show()
 
-print("Method 3: using read json file")
+print("Method 4: using read csv file with custom schema")
+csv_path = r'C:\Users\Basheer AhmedK\Desktop\Diggibyte\Pyspark\pyspark assignment\resources\credit_cards.csv'
+credit_card_csv_df = spark.read.format("csv").option("header", "true").schema(custom_schema).load(csv_path)
+credit_card_csv_df.show()
+
+print("Method 5: using read json file")
 json_path = r'C:\Users\Basheer AhmedK\Desktop\Diggibyte\Pyspark\pyspark assignment\resources\credit_cards.json'
 credit_card_json_df = spark.read.option("multiline", "true").json(json_path)
 credit_card_json_df.show()

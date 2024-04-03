@@ -49,10 +49,12 @@ actions_performed.show()
 
 
 # 4. Convert the time stamp column to the login_date column with YYYY-MM-DD format with date type as its data type
+print("4. Convert the time stamp column to the login_date column with YYYY-MM-DD format with date type as its data type")
 login_date_df = updated_log_df.select("log_id", "user_id", "user_activity", to_date("time_stamp").alias("login_date"))
 login_date_df.printSchema()
 login_date_df.show()
 
 # 5. Write the data frame as a CSV file with different write options except (merge condition)
-write_csv_path = r'C:\Users\Basheer AhmedK\Desktop\Diggibyte\Pyspark\pyspark assignment\resources\question_3.csv'
-login_date_df.write.csv(write_csv_path, mode='overwrite')
+# write_csv_path = r'C:\Users\Basheer AhmedK\Desktop\Diggibyte\Pyspark\pyspark assignment\resources'
+# login_date_df.coalesce(1).write.format("csv").mode("append").save(write_csv_path)
+# getting error while writing to file

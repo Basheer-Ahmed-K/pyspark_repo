@@ -34,35 +34,35 @@ print(df.count())
 print("\nAfter Flatten: ", end="")
 print(flatten_json_df.count())
 
-# # 4. Differentiate the difference using explode, explode outer, posexplode functions
-# print("4. Differentiate the difference using explode, explode outer, posexplode functions")
-# data = [
-#     (1, [1, 2, 3]),
-#     (2, [4, None, 6]),
-#     (3, [])
-# ]
-#
-# # Create DataFrame with custom schema
-# df = spark.createDataFrame(data, ["id", "numbers"])
-#
-# # Show original DataFrame
-# print("Original DataFrame:")
-# df.show()
-#
-# # Explode the 'numbers' array column
-# exploded_df = df.select("id", explode("numbers").alias("number"))
-# print("Exploded DataFrame:")
-# exploded_df.show()
-#
-# # Explode outer the 'numbers' array column
-# exploded_outer_df = df.select("id", explode_outer("numbers").alias("number"))
-# print("Exploded Outer DataFrame:")
-# exploded_outer_df.show()
-#
-# # PosExplode the 'numbers' array column
-# pos_exploded_df = df.select("id", posexplode("numbers").alias("pos", "number"))
-# print("PosExploded DataFrame:")
-# pos_exploded_df.show()
+# 4. Differentiate the difference using explode, explode outer, posexplode functions
+print("4. Differentiate the difference using explode, explode outer, posexplode functions")
+data = [
+    (1, [1, 2, 3]),
+    (2, [4, None, 6]),
+    (3, [])
+]
+
+# Create DataFrame with custom schema
+df = spark.createDataFrame(data, ["id", "numbers"])
+
+# Show original DataFrame
+print("Original DataFrame:")
+df.show()
+
+# Explode the 'numbers' array column
+exploded_df = df.select("id", explode("numbers").alias("number"))
+print("Exploded DataFrame:")
+exploded_df.show()
+
+# Explode outer the 'numbers' array column
+exploded_outer_df = df.select("id", explode_outer("numbers").alias("number"))
+print("Exploded Outer DataFrame:")
+exploded_outer_df.show()
+
+# PosExplode the 'numbers' array column
+pos_exploded_df = df.select("id", posexplode("numbers").alias("pos", "number"))
+print("PosExploded DataFrame:")
+pos_exploded_df.show()
 
 
 # 5. Filter the id which is equal to 1001

@@ -27,72 +27,72 @@ employee_data = [
 employee_df = spark.createDataFrame(employee_data, employee_schema)
 employee_df.show()
 
-# department_schema = StructType([
-#     StructField("dept_id", StringType(), False),
-#     StructField("dept_name", StringType(), True)
-# ])
-#
-# department_data = [
-#     ("D101", "sales"),
-#     ("D102", "finance"),
-#     ("D103", "marketing"),
-#     ("D104", "hr"),
-#     ("D105", "support")
-# ]
-#
-# department_df = spark.createDataFrame(department_data, department_schema)
-# department_df.show()
-#
-# country_schema = StructType([
-#     StructField("country_code", StringType(), True),
-#     StructField("country_name", StringType(), True)
-# ])
-# country_data = [
-#     ("ny", "newyork"),
-#     ("ca", "California"),
-#     ("uk", "Russia")
-# ]
-#
-# country_df = spark.createDataFrame(country_data, country_schema)
-#
-# # 2. Find avg salary of each department
-# print("2. Find avg salary of each department ")
-# avg_salary = employee_df.groupby("department").avg("salary").alias("Average Salary")
-# avg_salary.show()
-#
-# # 3. Find the employee’s name and department name whose name starts with ‘m’
-# print("3. Find the employee’s name and department name whose name starts with ‘m’")
-# employee_starts_with_m = employee_df.filter(employee_df.employee_name.startswith('m'))
-# starts_with_m = employee_starts_with_m.join(department_df,
-#                                             employee_starts_with_m["department"] == department_df["dept_id"], "inner") \
-#     .select(employee_starts_with_m.employee_name, department_df.dept_name)
-# starts_with_m.show()
-#
-# # 4. Create another new column in  employee_df as a bonus by multiplying employee salary *2
-# print("4. Create another new column in  employee_df as a bonus by multiplying employee salary *2")
-# employee_bonus_df = employee_df.withColumn("bonus", employee_df.salary * 2)
-# employee_bonus_df.show()
-#
-# # 5. Reorder the column names of employee_df columns as (employee_id,employee_name,salary,State,Age,department)
-# employee_df = employee_df.select("employee_id", "employee_name", "salary", "State", "Age", "department")
-# employee_df.show()
-#
-# # 6. Give the result of an inner join, left join, and right join when joining employee_df with department_df in a
-# # dynamic way
-# print("6. Give the result of an inner join, left join, and right join when joining employee_df with department_df in "
-#       "a dynamic way")
-#
-#
-# def dynamic_join(df1, df2, how):
-#     return df1.join(df2, df1.department == df2.dept_id, how)
-#
-#
-# inner_join_df = dynamic_join(employee_df, department_df, "inner")
-# inner_join_df.show()
-# left_join_df = dynamic_join(employee_df, department_df, "left")
-# left_join_df.show()
-# right_join_df = dynamic_join(employee_df, department_df, "right")
-# right_join_df.show()
+department_schema = StructType([
+    StructField("dept_id", StringType(), False),
+    StructField("dept_name", StringType(), True)
+])
+
+department_data = [
+    ("D101", "sales"),
+    ("D102", "finance"),
+    ("D103", "marketing"),
+    ("D104", "hr"),
+    ("D105", "support")
+]
+
+department_df = spark.createDataFrame(department_data, department_schema)
+department_df.show()
+
+country_schema = StructType([
+    StructField("country_code", StringType(), True),
+    StructField("country_name", StringType(), True)
+])
+country_data = [
+    ("ny", "newyork"),
+    ("ca", "California"),
+    ("uk", "Russia")
+]
+
+country_df = spark.createDataFrame(country_data, country_schema)
+
+# 2. Find avg salary of each department
+print("2. Find avg salary of each department ")
+avg_salary = employee_df.groupby("department").avg("salary").alias("Average Salary")
+avg_salary.show()
+
+# 3. Find the employee’s name and department name whose name starts with ‘m’
+print("3. Find the employee’s name and department name whose name starts with ‘m’")
+employee_starts_with_m = employee_df.filter(employee_df.employee_name.startswith('m'))
+starts_with_m = employee_starts_with_m.join(department_df,
+                                            employee_starts_with_m["department"] == department_df["dept_id"], "inner") \
+    .select(employee_starts_with_m.employee_name, department_df.dept_name)
+starts_with_m.show()
+
+# 4. Create another new column in  employee_df as a bonus by multiplying employee salary *2
+print("4. Create another new column in  employee_df as a bonus by multiplying employee salary *2")
+employee_bonus_df = employee_df.withColumn("bonus", employee_df.salary * 2)
+employee_bonus_df.show()
+
+# 5. Reorder the column names of employee_df columns as (employee_id,employee_name,salary,State,Age,department)
+employee_df = employee_df.select("employee_id", "employee_name", "salary", "State", "Age", "department")
+employee_df.show()
+
+# 6. Give the result of an inner join, left join, and right join when joining employee_df with department_df in a
+# dynamic way
+print("6. Give the result of an inner join, left join, and right join when joining employee_df with department_df in "
+      "a dynamic way")
+
+
+def dynamic_join(df1, df2, how):
+    return df1.join(df2, df1.department == df2.dept_id, how)
+
+
+inner_join_df = dynamic_join(employee_df, department_df, "inner")
+inner_join_df.show()
+left_join_df = dynamic_join(employee_df, department_df, "left")
+left_join_df.show()
+right_join_df = dynamic_join(employee_df, department_df, "right")
+right_join_df.show()
 
 # 7. Derive a new data frame with country_name instead of State in employee_df
 print("7. Derive a new data frame with country_name instead of State in employee_df")

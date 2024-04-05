@@ -1,8 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode, col, explode_outer, posexplode, current_date, year, month, day
 
-spark = SparkSession.builder.appName('spark-assignment').getOrCreate()
-
+spark = SparkSession.builder.appName("spark-assignment").getOrCreate()
 json_path = r'C:\Users\Basheer AhmedK\Desktop\Diggibyte\Pyspark\pyspark assignment\resources\nested_json_file.json'
 
 
@@ -64,7 +63,6 @@ pos_exploded_df = df.select("id", posexplode("numbers").alias("pos", "number"))
 print("PosExploded DataFrame:")
 pos_exploded_df.show()
 
-
 # 5. Filter the id which is equal to 1001
 print("5. Filter the id which is equal to 1001")
 flatten_json_df.filter(flatten_json_df['empId'] == 1001).show()
@@ -88,7 +86,6 @@ def toSnakeCase(dataframe):
 snake_case_df = toSnakeCase(flatten_json_df)
 snake_case_df.show()
 
-
 # 7. Add a new column named load_date with the current date
 print("7. Add a new column named load_date with the current date")
 load_date_df = snake_case_df.withColumn("load_date", current_date())
@@ -96,8 +93,7 @@ load_date_df.show()
 
 # 8. create 3 new columns as year, month, and day from the load_date column
 print("8. create 3 new columns as year, month, and day from the load_date column")
-year_month_day_df = load_date_df.withColumn("year", year(load_date_df.load_date))\
-    .withColumn("month", month(load_date_df.load_date))\
+year_month_day_df = load_date_df.withColumn("year", year(load_date_df.load_date)) \
+    .withColumn("month", month(load_date_df.load_date)) \
     .withColumn("day", day(load_date_df.load_date))
 year_month_day_df.show()
-
